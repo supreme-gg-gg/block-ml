@@ -1,0 +1,29 @@
+{
+  "type": "dense_layer",
+  "message0": "Dense Layer: units %1 activation %2 use bias %3",
+  "args0": [
+    {
+      "type": "field_number",
+      "name": "units"
+    },
+    {
+      "type": "field_dropdown",
+      "name": "activation_type",
+      "options": [
+        ["ReLU", "relu"],
+        ["Sigmoid", "sigmoid"],
+        ["Linear", "linear"],
+        ["Softmax", "softmax"]
+      ]
+    },
+    {
+      "type": "field_checkbox",
+      "name": "use_bias"
+    }
+  ],
+  "previousStatement": null,
+  "nextStatement": null,
+  "colour": 120,
+  "tooltip": "Defines a dense layer for a neural network.",
+  "inputsInline": true
+}
