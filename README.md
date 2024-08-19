@@ -14,13 +14,15 @@ Struggling...
 
 ## Environment setup
 
+**You would not be able to run anything without first enabling npm and dependent modules**
+
 ```
-npm init -y
-npm install node, express, blockly, webpack, webpack-cli
+npm install
 node server.js
 npx webpack
 ```
 
+- `npm install` downloads all the node_modules specified as dependencies in `package.json`
 - During development the files are put under src/ for webpack to generate dist/bundle.js.
 - Then we will move them to public/ with bundle.js so node.js can serve them properly
 
