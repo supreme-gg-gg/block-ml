@@ -1,0 +1,49 @@
+{
+  "kind": "categoryToolbox",
+  "contents": [
+    {
+      "kind": "category",
+      "name": "Input",
+      "contents": [
+        {
+          "kind": "block",
+          "type": "controls_if"
+        }
+      ]
+    },
+    {
+      "kind": "category",
+      "name": "test",
+      "contents": [
+        {
+          "kind": "block",
+          "type": "test_block"
+        }
+      ]
+    },
+    {
+      "kind": "category",
+      "name": "Neural Network",
+      "contents": [
+        {
+          "kind": "block",
+          "type": "dense_layer"
+        },
+        {
+          "kind": "block",
+          "type": "sequential_group"
+        }
+      ]
+    },
+    {
+        "kind": "category",
+        "name": "Output",
+        "contents": [
+            {
+                "kind": "block",
+                "type": "logic_boolean"
+            }
+        ]
+    }
+  ]
+}

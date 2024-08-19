@@ -1,5 +1,23 @@
 {
   "dependencies": {
-    "blockly": "^11.1.1"
-  }
+    "babel-loader": "^9.1.3",
+    "blockly": "^11.1.1",
+    "express": "^4.19.2",
+    "node": "^22.6.0"
+  },
+  "name": "block-ml",
+  "version": "1.0.0",
+  "description": "Struggling...",
+  "main": "server.js",
+  "devDependencies": {
+    "webpack": "^5.93.0",
+    "webpack-cli": "^5.1.4"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }

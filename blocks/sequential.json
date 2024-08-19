@@ -2,15 +2,11 @@
   "type": "sequential_group",
   "tooltip": "Groups Layers into a sequential Model",
   "helpUrl": "",
-  "message0": "Sequential Group of %2 layers of $1",
+  "message0": "Sequential Group of %1",
   "args0": [
     {
         "type": "input_statement",
         "name": "layers"
-    },
-    {
-        "type": "field_number",
-        "name": "number_of_layers"
     }
   ],
   "previousStatement": null,
