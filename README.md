@@ -5,7 +5,9 @@ Struggling...
 ## Dev Resources
 
 [I should have started with these beginner intuitive helpful tutorials!][1]
+
 [The documentation is a bit too dense lol][2]
+
 [Why do I feel like we are bulding a GUI for Keras lmao][3]
 
 [1]: https://blocklycodelabs.dev
