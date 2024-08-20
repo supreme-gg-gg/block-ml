@@ -7,6 +7,8 @@ const port = 3000;
 
 // Serve static files from the "public" directory
 app.use(express.static(path.join(__dirname, "public")));
+// Middleware to parse JSON bodies
+app.use(express.json());
 
 // we don't need this since we can fetch a JSON directly on client side
 app.get("/blocks/:filename", (req, res) => {
@@ -16,7 +18,7 @@ app.get("/blocks/:filename", (req, res) => {
       res.status(500).send("Error reading file");
       return;
     }
-    res.send(data).json();
+    res.send(data);
   });
 });
 
@@ -27,26 +29,38 @@ app.get("/", (req, res) => {
 
 // use this to fetch the footer.py and header.py
 app.get("/python/:filename", (req, res) => {
-  const filePath = path.join(__dirname, "blocks", req.params.filename);
+  const filePath = path.join(__dirname, "python", req.params.filename);
   fs.readFile(filePath, "utf8", (err, data) => {
     if (err) {
-      res.status(500).send("Error reading file");
+      res.status(500).send(`Error reading file ${filePath}: ${err.message}`);
       return;
     }
-    res.send(data).json();
+    res.setHeader("Content-Type", "test/x-python");
+    res.send(data);
   });
 });
 
 // Endpoint to write to a file (output)
 app.post("/write/:filename", (req, res) => {
-  const filePath = path.join(__dirname, "python", req.params.filename);
-  fs.writeFile(filePath, JSON.stringify(req.body, null, 2), "utf8", (err) => {
-    if (err) {
-      res.status(500).send("Error reading file");
-      return;
+  try {
+    const filePath = path.join(__dirname, "build", req.params.filename);
+    const { code } = req.body; // req.body.code
+
+    if (!code) {
+      return res.status(400).send("No code provided in the request.");
     }
-    res.send(`File written successfully to ${filePath}`);
-  });
+
+    fs.writeFile(filePath, code, "utf8", (err) => {
+      if (err) {
+        res.status(500).send("Error writing file");
+        return;
+      }
+      res.send(`File written successfully to ${filePath}`);
+    });
+  } catch (error) {
+    console.error("unhandled error:", error);
+    res.status(500).send("Server Error");
+  }
 });
 
 // Start the server

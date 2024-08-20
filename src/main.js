@@ -14,21 +14,25 @@ import { pythonGenerator } from "./python_generator";
   Blockly.setLocale(En);
 
   // fs is not available on brower environment so we move it to server side and send requests
-  // this is the generation handler function
   async function handleGeneration(event) {
     loadWorkspace(event.target);
     let code = pythonGenerator.workspaceToCode(Blockly.getMainWorkspace());
-    const header = await fetch("/python/header.py");
-    const footer = await fetch("/python/footer.py");
+    const headerResponse = await fetch("/python/header.py");
+    const header = await headerResponse.text();
+    const footerResponse = await fetch("/python/footer.py");
+    const footer = await footerResponse.text();
     let generatedCode = header + "\n" + code + "\n" + footer;
+    console.log(code);
+    console.log(generatedCode);
 
     try {
+      // send as plain text!
       const response = await fetch("/write/generatedCode.py", {
         method: "POST",
-        header: {
+        headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(generatedCode),
+        body: JSON.stringify({ code: generatedCode }),
       });
       const result = await response.text();
       console.log(result);
@@ -66,6 +70,12 @@ import { pythonGenerator } from "./python_generator";
     save(currentButton);
   }
 
+  /*
+    This is how we managed to dynamically update the webpage even though there is only one index.html
+    We use different modes on the same webpage and shows the home page buttons or the editor page selectively
+    The generate button should not be active in edit or maker mode (so remove EventListener)
+  */
+
   function enableEditMode() {
     document.body.setAttribute("mode", "edit");
     document.querySelectorAll(".button").forEach((btn) => {
@@ -91,6 +101,9 @@ import { pythonGenerator } from "./python_generator";
   document.querySelector("#edit").addEventListener("click", enableEditMode);
   document.querySelector("#done").addEventListener("click", enableMakerMode);
   document.querySelector("#save").addEventListener("click", handleSave);
+  document
+    .querySelector("#generate")
+    .addEventListener("click", handleGeneration);
 
   enableMakerMode();
 
@@ -110,7 +123,6 @@ import { pythonGenerator } from "./python_generator";
 
       // wait for all promises to resolve and return JSON array
       const blocksArray = await Promise.all(blockPromises);
-      console.log(blocksArray);
       // pass the resolved array to Blockly
       Blockly.defineBlocksWithJsonArray(blocksArray);
     } catch (error) {
@@ -120,8 +132,9 @@ import { pythonGenerator } from "./python_generator";
 
   loadBlocks();
 
-  // finally we load the toolkit and inject the workspace
   // A toolbox definition specifies what blocks get included in the toolbox, and in what order
+  // this fetching works because toolbox.json is placed in public and served as static files
+  // compare it to blocks/ JSONs which are not static but dynamically loaded via fetch requests to server!
   const toolbox = await fetch("toolbox.json");
   const toolboxJson = await toolbox.json();
 
