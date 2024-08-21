@@ -25,6 +25,9 @@
       <button class="mode-blockly mdl-button mdl-js-button" id="save">
         Save
       </button>
+      <button class="mode-blockly mdl-button mdl-js-button" id="generate">
+        Generate
+      </button>
       <p class="hint mode-edit">
         Tap any button to edit its code. <br />When complete, press Done.
       </p>
@@ -41,9 +44,14 @@
       </div>
 
       <div class="blockly-editor">
-        <div id="blocklyDiv" style="height: 480px; width: 400px"></div>
+        <div id="blocklyDiv" style="height: 500px; width: 600px"></div>
       </div>
     </main>
+
+    <label for="text-area">Output Code:</label>
+    <textarea id="text-area" readonly>
+    Output code is live-updated for debug purpose only
+    </textarea>
 
     <script src="bundle.js"></script>
   </body>
