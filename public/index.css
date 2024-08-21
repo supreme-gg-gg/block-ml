@@ -1,5 +1,5 @@
 main {
-  width: 400px;
+  width: 600px;
   position: relative;
   margin: 0 auto;
   overflow: hidden;
@@ -12,7 +12,7 @@ header {
 }
 
 h1 {
-  width: 400px;
+  width: 600px;
   position: relative;
   margin: 0 auto;
   color: #fff;
@@ -35,10 +35,10 @@ h1 {
 .blockly-editor {
   position: absolute;
   top: 64px;
-  left: -400px;
+  left: -600px;
   transition: left 0.4s;
-  height: 460px;
-  width: 400px;
+  height: 500px;
+  width: 600px;
   background-color: #eee;
 }
 
@@ -50,8 +50,8 @@ h1 {
   display: flex;
   flex-flow: column;
   justify-content: space-between;
-  height: 460px;
-  width: 400px;
+  height: 500px;
+  width: 600px;
 }
 
 .maker > div {
@@ -61,8 +61,8 @@ h1 {
 
 .button {
   color: #fff;
-  width: 200px;
-  height: 230px;
+  width: 300px;
+  height: 250px;
   font-size: 3em;
   display: flex;
   justify-content: center;

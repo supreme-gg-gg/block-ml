@@ -146,7 +146,7 @@ import { pythonGenerator } from "./python_generator";
   Blockly.inject("blocklyDiv", {
     toolbox: toolboxJson,
     scrollbars: false,
-    horizontalLayout: true,
-    toolboxPosition: "top",
+    verticalLayout: true,
+    toolboxPosition: "left",
   });
 })();
