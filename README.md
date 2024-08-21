@@ -28,9 +28,12 @@ block-ml/
 
 [Why do I feel like we are bulding a GUI for Keras lmao][3]
 
+[Sisyphus would have reached the top by the time we got to implement these COOL plugins!][4]
+
 [1]: https://blocklycodelabs.dev
 [2]: https://developers.google.com/blockly/guides/get-started/what-is-blockly
 [3]: https://www.tensorflow.org/api_docs/python/tf/keras
+[4]: https://google.github.io/blockly-samples/
 
 ## Environment setup
 

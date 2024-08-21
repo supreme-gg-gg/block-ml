@@ -74,3 +74,27 @@ h1 {
   margin: 1em 0;
   float: right;
 }
+
+/* General styling for the output label and textarea */
+label {
+  display: block;
+  margin: 20px auto 10px auto; /* Centered with spacing above and below */
+  width: 600px; /* Consistent width with the main editor */
+  font-size: 1.2em;
+  color: #333;
+}
+
+textarea {
+  width: 600px; /* Match the width of the main container */
+  height: 150px; /* Reasonable height for output */
+  display: block;
+  margin: 0 auto 20px auto; /* Centered with margin at the bottom */
+  padding: 10px;
+  font-family: monospace; /* Use a monospace font for code-like appearance */
+  font-size: 1em;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: none; /* Disable resizing */
+  color: #333;
+}

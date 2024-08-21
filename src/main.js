@@ -15,7 +15,7 @@ import { pythonGenerator } from "./python_generator";
 
   // fs is not available on brower environment so we move it to server side and send requests
   async function handleGeneration(event) {
-    loadWorkspace(event.target);
+    // loadWorkspace(event.target);
     let code = pythonGenerator.workspaceToCode(Blockly.getMainWorkspace());
     const headerResponse = await fetch("/python/header.py");
     const header = await headerResponse.text();
@@ -26,7 +26,6 @@ import { pythonGenerator } from "./python_generator";
     console.log(generatedCode);
 
     try {
-      // send as plain text!
       const response = await fetch("/write/generatedCode.py", {
         method: "POST",
         headers: {
@@ -149,4 +148,23 @@ import { pythonGenerator } from "./python_generator";
     verticalLayout: true,
     toolboxPosition: "left",
   });
+
+  const supportedEvents = new Set([
+    Blockly.Events.BLOCK_CHANGE,
+    Blockly.Events.BLOCK_CREATE,
+    Blockly.Events.BLOCK_DELETE,
+    Blockly.Events.BLOCK_MOVE,
+  ]);
+
+  function updateCode(event) {
+    // get the top layer workspace for multiple Blockly instances
+    const workspace = Blockly.getMainWorkspace();
+    if (workspace.isDragging()) return;
+    if (!supportedEvents.has(event.type)) return;
+    const code = pythonGenerator.workspaceToCode(workspace);
+    console.log(code);
+    document.getElementById("text-area").value = code;
+  }
+
+  Blockly.getMainWorkspace().addChangeListener(updateCode);
 })();
