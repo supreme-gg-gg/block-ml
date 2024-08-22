@@ -13,19 +13,7 @@ import * as Blockly from "blockly/core";
   6. Execute genrated code (for us we use Google Colab)
 */
 
-pythonGenerator.forBlock["dense_layer"] = function (block) {
-  const neurons = block.getFieldValue("units");
-  const activation = block.getFieldValue("activation_type");
-  // field_checkbox returns STRING "TRUE" or "FALSE"
-  const use_bias = block.getFieldValue("use_bias") == "TRUE" ? "True" : "False";
-  // another way to do this is to make a bunch of python helper functions createDenseLayer()
-  return `keras.layers.Dense(${neurons}, activation=${activation}, use_bias=${use_bias}),\n`;
-};
-
-pythonGenerator.forBlock["sequential_group"] = function (block, generator) {
-  const innerCode = generator.statementToCode(block, "layers"); // type input_statements
-  return `model = keras.Sequential([\n${innerCode}])\n`;
-};
+// ========= CATEGORY 1: Input And Data Processing =======
 
 pythonGenerator.forBlock["input_main"] = function (block) {
   // get the file path of the data first
@@ -41,6 +29,53 @@ pythonGenerator.forBlock["input_main"] = function (block) {
   return `data = load_data("${filePath}", "${type}")\nshape = ${shape}\n`;
 };
 
+pythonGenerator.forBlock["data_group"] = function (block, generator) {
+  const innerCode = generator.statementToCode(block, "data_functions"); // type input_statements
+  return `def process_data(data):\n${innerCode}data = process_data(data)\n`;
+};
+
+pythonGenerator.forBlock["normalize_data"] = function (block) {
+  const method = block.getFieldValue("normalize_method");
+  let code = "";
+  switch (method) {
+    case "minmax":
+      code += "scaler = MinMaxScaler()\n";
+      break;
+
+    case "zscore":
+      code += "scaler = StandardScaler()\n";
+      break;
+  }
+  code += "data = scaler.fit_transform(data)\n";
+  return code;
+};
+
+pythonGenerator.forBlock["filter_rows"] = function (block) {
+  const column = block.getFieldValue("column_name");
+  const condition = block.getFieldValue("condition");
+  const value = block.getFieldValue("value");
+  return `data = data[data[${column}] ${condition} ${value}]\n`;
+};
+
+pythonGenerator.forBlock["group_by_column"] = function (block) {
+  const groupBy = block.getFieldValue("group_by");
+  const aggregateColumn = block.getFieldValue("aggregate_column");
+  const aggregateMethod = block.getFieldValue("aggregate_method");
+  return `data = data.groupby('${groupBy}').agg({ '${aggregateColumn}': '${aggregateMethod}' })\n`;
+};
+
+pythonGenerator.forBlock["split_data"] = function (block) {
+  const ratio = block.getFieldValue("RATIO");
+  const shuffle = block.getFieldValue("SHUFFLE") == "TRUE";
+  const randomState = block.getFieldValue("RANDOM_STATE");
+  // data will be used always for training even if there is no testing split required
+  return `data, test_data = train_test_split(data, test_size=${
+    1 - ratio
+  }, shuffle=${shuffle}, random_state=${randomState})\n`;
+};
+
+// =========== CATEGORY TWO: TRAIN AND OPTIMIZE ============
+
 pythonGenerator.forBlock["train_setup"] = function (block) {
   const batch = block.getFieldValue("batch_size");
   let code = `batch = ${batch}\n`;
@@ -50,6 +85,22 @@ pythonGenerator.forBlock["train_setup"] = function (block) {
     code += `y = data["${target}"]\n`;
   }
   return code;
+};
+
+// ============ CATEGORY THREE: NEURAL NETWORK MODEL ==========
+
+pythonGenerator.forBlock["dense_layer"] = function (block) {
+  const neurons = block.getFieldValue("units");
+  const activation = block.getFieldValue("activation_type");
+  // field_checkbox returns STRING "TRUE" or "FALSE"
+  const use_bias = block.getFieldValue("use_bias") == "TRUE" ? "True" : "False";
+  // another way to do this is to make a bunch of python helper functions createDenseLayer()
+  return `keras.layers.Dense(${neurons}, activation=${activation}, use_bias=${use_bias}),\n`;
+};
+
+pythonGenerator.forBlock["sequential_group"] = function (block, generator) {
+  const innerCode = generator.statementToCode(block, "layers"); // type input_statements
+  return `model = keras.Sequential([\n${innerCode}])\n`;
 };
 
 export { pythonGenerator };

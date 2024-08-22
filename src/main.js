@@ -139,7 +139,6 @@ import { loadBlocks } from "./loadBlocks";
     if (workspace.isDragging()) return;
     if (!supportedEvents.has(event.type)) return;
     const code = pythonGenerator.workspaceToCode(workspace);
-    console.log(code);
     document.getElementById("text-area").value = code;
   }
 

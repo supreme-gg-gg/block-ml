@@ -1,6 +1,8 @@
 import numpy as np, pandas as pd
 import tensorflow as tf
 import tf.keras
+from sklearn.preprocessing import MinMaxScaler, StandardScaler
+from sklearn.model_selection import train_test_split
 
 def load_data(source, type):
     if type == "csv":

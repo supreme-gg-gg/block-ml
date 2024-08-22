@@ -1,0 +1,31 @@
+{
+  "type": "group_by_column",
+  "message0": "Group by %1 and aggregate %2 with %3",
+  "args0": [
+    {
+      "type": "field_input",
+      "name": "group_by",
+      "text": "GROUP BY"
+    },
+    {
+      "type": "field_input",
+      "name": "aggregate_column",
+      "text": "AGGREGATE COLUMN"
+    },
+    {
+      "type": "field_dropdown",
+      "name": "aggregate_method",
+      "options": [
+        ["Mean", "mean"],
+        ["Sum", "sum"],
+        ["Count", "count"]
+      ]
+    }
+  ],
+  "inputsInline": false,
+  "colour": 160,
+  "previousStatement": null,
+  "nextStatement": null,
+  "tooltip": "Group data by a specified column and aggregate the values of another column.",
+  "helpUrl": ""
+}

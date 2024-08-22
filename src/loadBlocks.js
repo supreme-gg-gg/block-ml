@@ -8,6 +8,11 @@ const blockFiles = [
   "input.json",
   "text-input.json",
   "train-setup.json",
+  "normalize.json",
+  "group-column.json",
+  "split-data.json",
+  "filter-rows.json",
+  "data.json",
 ]; // List of all JSON files
 
 // this method loads block by making fetch request to the server

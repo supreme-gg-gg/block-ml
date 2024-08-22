@@ -12,6 +12,26 @@
         {
           "kind": "block",
           "type": "file_path_input"
+        }, 
+        {
+          "kind": "block",
+          "type": "data_group"
+        },
+        {
+          "kind": "block",
+          "type": "normalize_data"
+        },
+        {
+          "kind": "block",
+          "type": "filter_rows"
+        }, 
+        {
+          "kind": "block",
+          "type": "group_by_column"
+        },
+        {
+          "kind": "block",
+          "type": "split_data"
         }
       ]
     },
