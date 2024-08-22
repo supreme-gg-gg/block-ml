@@ -1,6 +1,6 @@
 {
     "type": "train_setup",
-    "message0": "Train with batch size %1 using %2 as target",
+    "message0": "Train with batch size %1 using %2 as target (%3)",
     "args0": [
         {
             "type": "field_number",
@@ -11,7 +11,12 @@
         {
             "type": "field_input",
             "name": "target_column",
-            "text": "\"column\""
+            "text": "column"
+        },
+        {
+            "type": "field_checkbox",
+            "name": "use_target",
+            "checked": true
         }
     ],
     "colour":160,

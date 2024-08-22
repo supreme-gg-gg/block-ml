@@ -24,8 +24,6 @@ import { loadBlocks } from "./loadBlocks";
     const footerResponse = await fetch("/python/footer.py");
     const footer = await footerResponse.text();
     let generatedCode = header + "\n" + code + "\n" + footer;
-    console.log(code);
-    console.log(generatedCode);
 
     try {
       const response = await fetch("/write/generatedCode.py", {
@@ -36,7 +34,7 @@ import { loadBlocks } from "./loadBlocks";
         body: JSON.stringify({ code: generatedCode }),
       });
       const result = await response.text();
-      console.log(result);
+      document.getElementById("text-area").value = result;
     } catch (error) {
       console.error("Error generating code:", error);
     }

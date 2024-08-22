@@ -7,7 +7,7 @@
       "name": "data_type",
       "options": [
         ["CSV", "csv"],
-        ["DataFrame", "df"],
+        ["Excel", "xlsx"],
         ["NumPy Array", "np"]
       ]
     },
