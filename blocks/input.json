@@ -1,0 +1,31 @@
+{
+  "type": "input_main",
+  "message0": "Input data of type %1 at %2",
+  "args0": [
+    {
+      "type": "field_grid_dropdown",
+      "name": "data_type",
+      "options": [
+        ["CSV", "csv"],
+        ["DataFrame", "df"],
+        ["NumPy Array", "np"]
+      ]
+    },
+    {
+        "type": "input_value",
+        "name": "file_path"
+    }
+  ],
+  "message1": "of shape %1",
+  "args1": [
+    {
+      "type": "field_input",
+      "name": "shape",
+      "text": "(x, y, z)"
+    }
+  ],
+  "nextStatement": null,
+  "colour": 60,
+  "tooltip": "Provide info about your dataset",
+  "inputsInline": false
+}

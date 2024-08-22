@@ -8,6 +8,8 @@ import * as En from "blockly/msg/en";
 // The generator is defined elsewhere
 import { pythonGenerator } from "./python_generator";
 
+import { loadBlocks } from "./loadBlocks";
+
 // immediately invoked function expression (IIFE)
 (async function () {
   let currentButton;
@@ -105,29 +107,6 @@ import { pythonGenerator } from "./python_generator";
     .addEventListener("click", handleGeneration);
 
   enableMakerMode();
-
-  // these functions load the blocks and register them
-  const blockFiles = ["test.json", "dense.json", "sequential.json"]; // List of all JSON files
-
-  // this method loads block by making fetch request to the server
-  async function loadBlocks() {
-    try {
-      const blockPromises = blockFiles.map(async (file) => {
-        const response = await fetch(`/blocks/${file}`);
-        if (!response.ok) {
-          throw new Error(`Failed to fetch block: ${response.statusText}`);
-        }
-        return response.json();
-      });
-
-      // wait for all promises to resolve and return JSON array
-      const blocksArray = await Promise.all(blockPromises);
-      // pass the resolved array to Blockly
-      Blockly.defineBlocksWithJsonArray(blocksArray);
-    } catch (error) {
-      console.error("Error loading block definitions:", error);
-    }
-  }
 
   loadBlocks();
 

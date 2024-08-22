@@ -7,17 +7,21 @@
       "contents": [
         {
           "kind": "block",
-          "type": "controls_if"
+          "type": "input_main"
+        }, 
+        {
+          "kind": "block",
+          "type": "file_path_input"
         }
       ]
     },
     {
       "kind": "category",
-      "name": "test",
+      "name": "Training",
       "contents": [
         {
           "kind": "block",
-          "type": "test_block"
+          "type": "train_setup"
         }
       ]
     },
