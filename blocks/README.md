@@ -13,3 +13,17 @@
 | Neural network groups | Purple |
 | Input main            | Yellow |
 | Data functions        | Red    |
+
+## Todo
+
+**Automate generation of the following**
+
+- python generator skeleton (in src/python_generator.js)
+- updating list of JSON files (just read all) in loadBlocks.js
+- adding new blocks into toolbox.json
+
+## Brief Documentation (to be refined)
+
+- A train block must be preceeded by a compile block (somehow type check did not work will open issue)
+- You must define the model (Sequential group for example) before using any train functions
+- When evaluating model on test data, you must first have used split_data function/ block (issue will be opened)

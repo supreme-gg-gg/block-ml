@@ -13,6 +13,8 @@ const blockFiles = [
   "split-data.json",
   "filter-rows.json",
   "data.json",
+  "compile-model.json",
+  "evaluate-model.json",
 ]; // List of all JSON files
 
 // this method loads block by making fetch request to the server

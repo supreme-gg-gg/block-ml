@@ -42,6 +42,14 @@
         {
           "kind": "block",
           "type": "train_setup"
+        }, 
+        {
+          "kind": "block",
+          "type": "compile_model"
+        },
+        {
+          "kind": "block",
+          "type": "evaluate_model"
         }
       ]
     },

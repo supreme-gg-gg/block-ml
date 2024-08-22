@@ -66,7 +66,7 @@ pythonGenerator.forBlock["group_by_column"] = function (block) {
 
 pythonGenerator.forBlock["split_data"] = function (block) {
   const ratio = block.getFieldValue("RATIO");
-  const shuffle = block.getFieldValue("SHUFFLE") == "TRUE";
+  const shuffle = block.getFieldValue("SHUFFLE") == "TRUE" ? "True" : "False";
   const randomState = block.getFieldValue("RANDOM_STATE");
   // data will be used always for training even if there is no testing split required
   return `data, test_data = train_test_split(data, test_size=${
@@ -74,17 +74,38 @@ pythonGenerator.forBlock["split_data"] = function (block) {
   }, shuffle=${shuffle}, random_state=${randomState})\n`;
 };
 
-// =========== CATEGORY TWO: TRAIN AND OPTIMIZE ============
+// =========== CATEGORY TWO: TRAIN, OPTIMIZE, EVALUATE ============
 
 pythonGenerator.forBlock["train_setup"] = function (block) {
   const batch = block.getFieldValue("batch_size");
-  let code = `batch = ${batch}\n`;
+  const epoch = block.getFieldValue("epoch");
+  const validation = block.getFieldValue("validation_split");
+
+  let code = `batch_size, epoch, validation_ratio = ${batch}, ${epoch}, ${validation}\n`;
   if (block.getFieldValue("use_target") == "TRUE") {
     const target = block.getFieldValue("target_column");
     code += `assert ("${target}" in data.columns), "Specified target column not found"\n`;
-    code += `y = data["${target}"]\n`;
+    code += `y_train = data["${target}"]\n`;
+    code += `data = data.drop(columns=["${target}"])\n`;
+    code +=
+      "history = model.fit(data, y_train, epoch=epoch, batch_size=batch_size, validation_split=validation_ratio)\n";
+    return code;
   }
+  code +=
+    "history = model.fit(data, epoch=epoch, batch_size=batch_size, validation_split=validation_ratio)\n";
   return code;
+};
+
+pythonGenerator.forBlock["compile_model"] = function (block) {
+  const optimizer = block.getFieldValue("OPTIMIZER");
+  const lossFunction = block.getFieldValue("LOSS_FUNCTION");
+  const metrics = block.getFieldValue("METRICS");
+
+  return `model.compile(optimizer='${optimizer}', loss='${lossFunction}', metrics=['${metrics}'])\n`;
+};
+
+pythonGenerator.forBlock["evaluate_model"] = function (block) {
+  return `score = evaluation = model.evaluate(test_data)\n`;
 };
 
 // ============ CATEGORY THREE: NEURAL NETWORK MODEL ==========
@@ -95,7 +116,7 @@ pythonGenerator.forBlock["dense_layer"] = function (block) {
   // field_checkbox returns STRING "TRUE" or "FALSE"
   const use_bias = block.getFieldValue("use_bias") == "TRUE" ? "True" : "False";
   // another way to do this is to make a bunch of python helper functions createDenseLayer()
-  return `keras.layers.Dense(${neurons}, activation=${activation}, use_bias=${use_bias}),\n`;
+  return `keras.layers.Dense(${neurons}, activation='${activation}', use_bias=${use_bias}),\n`;
 };
 
 pythonGenerator.forBlock["sequential_group"] = function (block, generator) {

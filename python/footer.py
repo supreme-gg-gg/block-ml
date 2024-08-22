@@ -1,16 +1,11 @@
-# Ideally all these are input by user in the "TRAIN" block
-model.compile(
-    optimizer=keras.optimizers.Adam, 
-    loss=keras.losses.BinaryCrossentropy(), 
-    metrics=[
-        keras.metrics.BinaryAccuracy(),
-        kears.metrics.FalseNegatives()
-    ]
-)
+# model.fit and model.compile has been handled by train-setup.json block
 
-# x and y will be obtained from input layer block
-# batch-size and epochs will be input by user
-model.fit(x, y, batch_size=32, epochs=10)
+# score is obtained in model.evaluate
+
+print("Test loss:", score[0])
+print("Test accuracy:", score[1])
+
+# MORE HELPER FUNCTIONS
 
 # exported model contained forward pass and can be served via TF-Serving
 model.export("myModel.h5")

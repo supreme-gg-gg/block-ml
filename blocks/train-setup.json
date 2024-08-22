@@ -1,6 +1,6 @@
 {
     "type": "train_setup",
-    "message0": "Train with batch size %1 using %2 as target (%3)",
+    "message0": "Train with batch epoch %2, batch size %1, validation split %3",
     "args0": [
         {
             "type": "field_number",
@@ -8,6 +8,22 @@
             "value": 32,
             "min": 0
         },
+        {
+            "type": "field_number", 
+            "name": "epoch",
+            "value": 10,
+            "min": 1
+        }, 
+        {
+            "type": "field_number",
+            "name": "validation_split",
+            "value": 0.2,
+            "min": 0,
+            "max": 1
+        }
+    ],
+    "message1": "using target %2 (column: %1)",
+    "args1": [
         {
             "type": "field_input",
             "name": "target_column",
@@ -19,8 +35,9 @@
             "checked": true
         }
     ],
-    "colour":160,
+    "colour":60,
     "tooltip": "Provide info about training setup",
+    "inputsInline": false,
     "nextStatement": null,
-    "previousStatement": null
+    "previousStatement": "compile_model"
 }
