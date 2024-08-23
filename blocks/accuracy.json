@@ -1,0 +1,23 @@
+{
+  "type": "accuracy_summary",
+  "message0": "Show training accuracy summary: final %1, over time %2",
+  "args0": [
+    {
+      "type": "field_checkbox",
+      "name": "SHOW_FINAL_ACC",
+      "checked": true,
+      "text": "Final Accuracy"
+    },
+    {
+      "type": "field_checkbox",
+      "name": "SHOW_ACC_OVER_TIME",
+      "checked": true,
+      "text": "Accuracy Over Time"
+    }
+  ],
+  "previousStatement": null,
+  "nextStatement": null,
+  "colour": 210,
+  "tooltip": "Display accuracy summary of training.",
+  "helpUrl": ""
+}

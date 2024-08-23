@@ -68,14 +68,48 @@
       ]
     },
     {
-        "kind": "category",
-        "name": "Output",
-        "contents": [
-            {
-                "kind": "block",
-                "type": "logic_boolean"
-            }
-        ]
+      "kind": "category",
+      "name": "Analytics",
+      "contents": [
+        {
+          "kind": "block",
+          "type": "accuracy_summary"
+        },
+        {
+          "kind": "block",
+          "type": "plot_history"
+        },
+        {
+          "kind": "block",
+          "type": "array_input"
+        }, 
+        {
+          "kind": "block",
+          "type": "confusion_matrix"
+        }
+      ]
+    },
+    {
+      "kind": "category",
+      "name": "Output",
+      "contents": [
+          {
+            "kind": "block",
+            "type": "predict"
+          }, 
+          {
+            "kind": "block",
+            "type": "export_model"
+          },
+          {
+            "kind": "block",
+            "type": "serve_model"
+          }, 
+          {
+            "kind": "block",
+            "type": "file_path_input"
+          }
+      ]
     }
   ]
 }

@@ -1,0 +1,8 @@
+{
+  "type": "serve_model",
+  "message0": "Allows API calls to use the trained model",
+  "colour": 0,
+  "previousStatement": null,
+  "tooltip": "This block will be developed in the future.",
+  "helpUrl": ""
+}

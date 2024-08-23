@@ -1,6 +1,6 @@
 {
   "type": "input_main",
-  "message0": "Input data of type %1 at %2",
+  "message0": "Input data at %2 of type %1",
   "args0": [
     {
       "type": "field_grid_dropdown",
@@ -27,5 +27,5 @@
   "nextStatement": null,
   "colour": 285,
   "tooltip": "Provide info about your dataset",
-  "inputsInline": false
+  "inputsInline": true
 }

@@ -19,11 +19,9 @@ import { loadBlocks } from "./loadBlocks";
   async function handleGeneration(event) {
     // loadWorkspace(event.target);
     let code = pythonGenerator.workspaceToCode(Blockly.getMainWorkspace());
-    const headerResponse = await fetch("/python/header.py");
+    const headerResponse = await fetch("header.py");
     const header = await headerResponse.text();
-    const footerResponse = await fetch("/python/footer.py");
-    const footer = await footerResponse.text();
-    let generatedCode = header + "\n" + code + "\n" + footer;
+    let generatedCode = header + "\n" + code;
 
     try {
       const response = await fetch("/write/generatedCode.py", {

@@ -1,0 +1,16 @@
+{
+  "type": "array_input",
+  "message0": "array %1",
+  "args0": [
+    {
+      "type": "field_input",
+      "name": "ARRAY",
+      "check": "Array",
+      "text": "['a', 'b', 'c']"
+    }
+  ],
+  "output": "Array",
+  "colour": 160,
+  "tooltip": "Creates an array of values",
+  "helpUrl": ""
+}

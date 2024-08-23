@@ -15,6 +15,13 @@ const blockFiles = [
   "data.json",
   "compile-model.json",
   "evaluate-model.json",
+  "accuracy.json",
+  "array-input.json",
+  "confusion-matrix.json",
+  "export-model.json",
+  "history-plot.json",
+  "serve-model.json",
+  "predict.json",
 ]; // List of all JSON files
 
 // this method loads block by making fetch request to the server

@@ -22,8 +22,14 @@
 - updating list of JSON files (just read all) in loadBlocks.js
 - adding new blocks into toolbox.json
 
+**ISSUES**
+
+- better organisation: create y_train before splitting data helps to make x-train, x-test, y-train, y-test!!
+- You can use a flag to simply mark the above process!
+
 ## Brief Documentation (to be refined)
 
 - A train block must be preceeded by a compile block (somehow type check did not work will open issue)
 - You must define the model (Sequential group for example) before using any train functions
 - When evaluating model on test data, you must first have used split_data function/ block (issue will be opened)
+- Dataset used to make prediction should match training data in terms of shape (features)

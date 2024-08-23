@@ -85,6 +85,7 @@ pythonGenerator.forBlock["train_setup"] = function (block) {
   if (block.getFieldValue("use_target") == "TRUE") {
     const target = block.getFieldValue("target_column");
     code += `assert ("${target}" in data.columns), "Specified target column not found"\n`;
+    code += `target_label = ${target}\n`;
     code += `y_train = data["${target}"]\n`;
     code += `data = data.drop(columns=["${target}"])\n`;
     code +=
@@ -105,7 +106,31 @@ pythonGenerator.forBlock["compile_model"] = function (block) {
 };
 
 pythonGenerator.forBlock["evaluate_model"] = function (block) {
-  return `score = evaluation = model.evaluate(test_data)\n`;
+  return `evaluate_model(test_data)\n`;
+};
+
+pythonGenerator.forBlock["plot_history"] = function (block) {
+  const metrics = block.getFieldValue("METRICS");
+  return `plot_history(${metrics}, history)\n`;
+};
+
+pythonGenerator.forBlock["accuracy_summary"] = function (block) {
+  const show_final_acc = block.getFieldValue("SHOW_FINAL_ACC") == "TRUE";
+  const show_acc_over_time =
+    block.getFieldValue("SHOW_ACC_OVER_TIME") == "TRUE";
+  return `show_accuracy(history, ${show_final_acc}, ${show_acc_over_time})\n`;
+};
+
+// Modify this function when splitting and label column setup is done!
+pythonGenerator.forBlock["confusion_matrix"] = function (block) {
+  const filePathBlock = block.getInputTargetBlock("LABELS");
+  const labels = filePathBlock
+    ? filePathBlock.getFieldValue("ARRAY")
+    : "['1', '2', '3']";
+  let code = "";
+  code += "y_true = data_test[target_label]\n";
+  code += "y_pred = model.predict(data_test)\n";
+  return `plot_confusion_matrix(y_true, y_pred, ${labels})\n`;
 };
 
 // ============ CATEGORY THREE: NEURAL NETWORK MODEL ==========
@@ -122,6 +147,33 @@ pythonGenerator.forBlock["dense_layer"] = function (block) {
 pythonGenerator.forBlock["sequential_group"] = function (block, generator) {
   const innerCode = generator.statementToCode(block, "layers"); // type input_statements
   return `model = keras.Sequential([\n${innerCode}])\n`;
+};
+
+// ========== CATEGORY FOUR: OUTPUT ==============
+
+pythonGenerator.forBlock["predict"] = function (block) {
+  const filePathBlock = block.getInputTargetBlock("file_path");
+  if (!filePathBlock) {
+    return `assert False, "No prediction dataset provided"`;
+  }
+  const filePath = filePathBlock.getFieldValue("file_path");
+  const data_type = block.getFieldValue("data_type");
+  return `data_predict = load_data(${filePath}, ${data_type})\nmodel.predict(data_predict)\n`;
+};
+
+pythonGenerator.forBlock["export_model"] = function (block) {
+  const format = block.getFieldValue("FORMAT");
+  const filePathBlock = block.getInputTargetBlock("file_path");
+  const filePath = filePathBlock
+    ? filePathBlock.getFieldValue("file_path")
+    : "trained_model.hdf5";
+  const includeOptimizer = block.getFieldValue("INCLUDE_OPTIMIZER") == "TRUE";
+
+  return `export_model(model, ${filePath}, ${format}, ${includeOptimizer})\n`;
+};
+
+pythonGenerator.forBlock["serve_model"] = function () {
+  return `print("Model has been served... (will be developed)")`;
 };
 
 export { pythonGenerator };
