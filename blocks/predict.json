@@ -1,0 +1,24 @@
+{
+    "type": "predict",
+    "message0": "Make prediction on dataset %2 of type %1",
+    "args0": [
+        {
+            "type": "field_grid_dropdown",
+            "name": "data_type",
+            "options": [
+                ["CSV", "csv"],
+                ["Excel", "xlsx"],
+                ["NumPy Array", "np"]
+            ]
+        },
+        {
+            "type": "input_value",
+            "name": "file_path"
+        }
+    ],
+    "nextStatement": null,
+    "previousStatement": null,
+    "colour": 0,
+    "tooltip": "Make prediction on a dataset with provided source",
+    "inputsInline": true
+}

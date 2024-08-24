@@ -1,0 +1,14 @@
+{
+    "type": "file_path_input",
+    "message0": "%1",
+    "args0": [
+        {
+            "type": "field_input",
+            "name": "file_path",
+            "text": "path/to/file.csv"
+        }
+    ],
+    "output": "String",
+    "colour": 160,
+    "tooltip": "Enter the file path to your dataset"
+}

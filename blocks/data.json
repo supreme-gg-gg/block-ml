@@ -1,0 +1,15 @@
+{
+  "type": "data_group",
+  "tooltip": "Group all data processing blocks",
+  "helpUrl": "",
+  "message0": "Process loaded data %1",
+  "args0": [
+    {
+        "type": "input_statement",
+        "name": "data_functions"
+    }
+  ],
+  "previousStatement": null,
+  "nextStatement": null,
+  "colour": 285
+}

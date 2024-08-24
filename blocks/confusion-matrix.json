@@ -1,0 +1,16 @@
+{
+  "type": "confusion_matrix",
+  "message0": "Show confusion matrix with labels %1",
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "LABELS",
+      "check": "Array"
+    }
+  ],
+  "previousStatement": null,
+  "nextStatement": null,
+  "colour": 210,
+  "tooltip": "Displays a confusion matrix for the classification model.",
+  "helpUrl": ""
+}

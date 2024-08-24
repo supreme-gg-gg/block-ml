@@ -10,7 +10,7 @@ app.use(express.static(path.join(__dirname, "public")));
 // Middleware to parse JSON bodies
 app.use(express.json());
 
-// we don't need this since we can fetch a JSON directly on client side
+// we can move blocks/ to public/ to avoid get request tho...
 app.get("/blocks/:filename", (req, res) => {
   const filePath = path.join(__dirname, "blocks", req.params.filename);
   fs.readFile(filePath, "utf8", (err, data) => {
@@ -27,7 +27,8 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "src", "index.html"));
 });
 
-// use this to fetch the footer.py and header.py
+// DEPRICATED: no longer needed, header.py moved to public/ (static)
+/*
 app.get("/python/:filename", (req, res) => {
   const filePath = path.join(__dirname, "python", req.params.filename);
   fs.readFile(filePath, "utf8", (err, data) => {
@@ -39,6 +40,7 @@ app.get("/python/:filename", (req, res) => {
     res.send(data);
   });
 });
+*/
 
 // Endpoint to write to a file (output)
 app.post("/write/:filename", (req, res) => {

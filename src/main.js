@@ -8,6 +8,8 @@ import * as En from "blockly/msg/en";
 // The generator is defined elsewhere
 import { pythonGenerator } from "./python_generator";
 
+import { loadBlocks } from "./loadBlocks";
+
 // immediately invoked function expression (IIFE)
 (async function () {
   let currentButton;
@@ -17,13 +19,9 @@ import { pythonGenerator } from "./python_generator";
   async function handleGeneration(event) {
     // loadWorkspace(event.target);
     let code = pythonGenerator.workspaceToCode(Blockly.getMainWorkspace());
-    const headerResponse = await fetch("/python/header.py");
+    const headerResponse = await fetch("header.py");
     const header = await headerResponse.text();
-    const footerResponse = await fetch("/python/footer.py");
-    const footer = await footerResponse.text();
-    let generatedCode = header + "\n" + code + "\n" + footer;
-    console.log(code);
-    console.log(generatedCode);
+    let generatedCode = header + "\n" + code;
 
     try {
       const response = await fetch("/write/generatedCode.py", {
@@ -34,7 +32,7 @@ import { pythonGenerator } from "./python_generator";
         body: JSON.stringify({ code: generatedCode }),
       });
       const result = await response.text();
-      console.log(result);
+      document.getElementById("text-area").value = result;
     } catch (error) {
       console.error("Error generating code:", error);
     }
@@ -106,29 +104,6 @@ import { pythonGenerator } from "./python_generator";
 
   enableMakerMode();
 
-  // these functions load the blocks and register them
-  const blockFiles = ["test.json", "dense.json", "sequential.json"]; // List of all JSON files
-
-  // this method loads block by making fetch request to the server
-  async function loadBlocks() {
-    try {
-      const blockPromises = blockFiles.map(async (file) => {
-        const response = await fetch(`/blocks/${file}`);
-        if (!response.ok) {
-          throw new Error(`Failed to fetch block: ${response.statusText}`);
-        }
-        return response.json();
-      });
-
-      // wait for all promises to resolve and return JSON array
-      const blocksArray = await Promise.all(blockPromises);
-      // pass the resolved array to Blockly
-      Blockly.defineBlocksWithJsonArray(blocksArray);
-    } catch (error) {
-      console.error("Error loading block definitions:", error);
-    }
-  }
-
   loadBlocks();
 
   // A toolbox definition specifies what blocks get included in the toolbox, and in what order
@@ -162,7 +137,6 @@ import { pythonGenerator } from "./python_generator";
     if (workspace.isDragging()) return;
     if (!supportedEvents.has(event.type)) return;
     const code = pythonGenerator.workspaceToCode(workspace);
-    console.log(code);
     document.getElementById("text-area").value = code;
   }
 

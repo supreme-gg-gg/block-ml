@@ -1,0 +1,29 @@
+{
+  "type": "export_model",
+  "message0": "Export model as %1 to file path %2 with optimizer %3",
+  "args0": [
+    {
+      "type": "field_grid_dropdown",
+      "name": "FORMAT",
+      "options": [
+        ["HDF5", "hdf5"],
+        ["SavedModel", "saved_model"]
+      ]
+    },
+    {
+      "type": "input_value",
+      "name": "file_path",
+      "check": "String"
+    },
+    {
+      "type": "field_checkbox",
+      "name": "INCLUDE_OPTIMIZER",
+      "checked": true
+    }
+  ],
+  "inputsInline": true,
+  "colour": 0,
+  "previousStatement": null,
+  "tooltip": "Export the trained model to a file. You can choose the format and whether to include the optimizer state.",
+  "helpUrl": ""
+}

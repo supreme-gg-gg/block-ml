@@ -7,17 +7,49 @@
       "contents": [
         {
           "kind": "block",
-          "type": "controls_if"
+          "type": "input_main"
+        }, 
+        {
+          "kind": "block",
+          "type": "file_path_input"
+        }, 
+        {
+          "kind": "block",
+          "type": "data_group"
+        },
+        {
+          "kind": "block",
+          "type": "normalize_data"
+        },
+        {
+          "kind": "block",
+          "type": "filter_rows"
+        }, 
+        {
+          "kind": "block",
+          "type": "group_by_column"
+        },
+        {
+          "kind": "block",
+          "type": "split_data"
         }
       ]
     },
     {
       "kind": "category",
-      "name": "test",
+      "name": "Training",
       "contents": [
         {
           "kind": "block",
-          "type": "test_block"
+          "type": "train_setup"
+        }, 
+        {
+          "kind": "block",
+          "type": "compile_model"
+        },
+        {
+          "kind": "block",
+          "type": "evaluate_model"
         }
       ]
     },
@@ -36,14 +68,48 @@
       ]
     },
     {
-        "kind": "category",
-        "name": "Output",
-        "contents": [
-            {
-                "kind": "block",
-                "type": "logic_boolean"
-            }
-        ]
+      "kind": "category",
+      "name": "Analytics",
+      "contents": [
+        {
+          "kind": "block",
+          "type": "accuracy_summary"
+        },
+        {
+          "kind": "block",
+          "type": "plot_history"
+        },
+        {
+          "kind": "block",
+          "type": "array_input"
+        }, 
+        {
+          "kind": "block",
+          "type": "confusion_matrix"
+        }
+      ]
+    },
+    {
+      "kind": "category",
+      "name": "Output",
+      "contents": [
+          {
+            "kind": "block",
+            "type": "predict"
+          }, 
+          {
+            "kind": "block",
+            "type": "export_model"
+          },
+          {
+            "kind": "block",
+            "type": "serve_model"
+          }, 
+          {
+            "kind": "block",
+            "type": "file_path_input"
+          }
+      ]
     }
   ]
 }

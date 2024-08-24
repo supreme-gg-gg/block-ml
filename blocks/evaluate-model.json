@@ -1,0 +1,10 @@
+{
+  "type": "evaluate_model",
+  "message0": "Evaluate model on test data",
+  "inputsInline": false,
+  "colour": 60,
+  "previousStatement": null,
+  "nextStatement": null,
+  "tooltip": "Evaluate the model on test data and obtain metrics.",
+  "helpUrl": ""
+}
