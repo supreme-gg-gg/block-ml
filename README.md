@@ -11,9 +11,7 @@ block-ml/
 │
 ├── blocks/ # JSON files for block definitions
 │
-├── public/ # static files served by express
-│
-├── python/ # python templates and sources
+├── public/ # static files served by express + python header
 │
 ├── src/ # javascript files bundled by webpack
 │
