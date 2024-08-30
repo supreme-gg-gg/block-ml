@@ -22,19 +22,6 @@
             "max": 1
         }
     ],
-    "message1": "using target %2 (column: %1)",
-    "args1": [
-        {
-            "type": "field_input",
-            "name": "target_column",
-            "text": "column"
-        },
-        {
-            "type": "field_checkbox",
-            "name": "use_target",
-            "checked": true
-        }
-    ],
     "colour":60,
     "tooltip": "Provide info about training setup",
     "inputsInline": false,

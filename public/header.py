@@ -15,7 +15,7 @@ def load_data(source, type):
     elif type == "np":
         # We can ignore this case for now we only use pandas for loading
         # NumPy binary file (file.npy)
-        return np.load(source) 
+        return np.load(source)
     
 def export_model(model, source, type, optimizer):
     if type == "hdf5":

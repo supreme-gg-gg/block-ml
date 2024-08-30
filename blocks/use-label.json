@@ -1,0 +1,15 @@
+{
+    "type": "use_label",
+    "message0": "Use column %1 as target",
+    "args0": [
+        {
+            "type": "field_input",
+            "name": "target_column",
+            "text": "column"
+        }
+    ],
+    "colour": 285,
+    "tooltip": "Specify which column to use as target",
+    "nextStatement": null,
+    "previousStatement": "input_main"
+}

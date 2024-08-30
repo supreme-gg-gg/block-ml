@@ -22,6 +22,7 @@ const blockFiles = [
   "history-plot.json",
   "serve-model.json",
   "predict.json",
+  "use-label.json",
 ]; // List of all JSON files
 
 // this method loads block by making fetch request to the server

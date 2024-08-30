@@ -29,6 +29,13 @@ pythonGenerator.forBlock["input_main"] = function (block) {
   return `data = load_data("${filePath}", "${type}")\nshape = ${shape}\n`;
 };
 
+pythonGenerator.forBlock["use_label"] = function (block) {
+  const target = block.getFieldValue("target_column");
+  return `assert ("${target}" in data.columns), "Specified target column not found"\n
+  target_label = ${target}\ndata_y = data[target_label]\n
+  data.drop([target_label, axis=1])`;
+};
+
 pythonGenerator.forBlock["data_group"] = function (block, generator) {
   const innerCode = generator.statementToCode(block, "data_functions"); // type input_statements
   return `def process_data(data):\n${innerCode}data = process_data(data)\n`;
@@ -68,8 +75,9 @@ pythonGenerator.forBlock["split_data"] = function (block) {
   const ratio = block.getFieldValue("RATIO");
   const shuffle = block.getFieldValue("SHUFFLE") == "TRUE" ? "True" : "False";
   const randomState = block.getFieldValue("RANDOM_STATE");
-  // data will be used always for training even if there is no testing split required
-  return `data, test_data = train_test_split(data, test_size=${
+  // "data" will be used always for training even if there is no testing split required
+  return `
+  data, data_y, test_data test_y = train_test_split(data, data_y, test_size=${
     1 - ratio
   }, shuffle=${shuffle}, random_state=${randomState})\n`;
 };
@@ -82,18 +90,7 @@ pythonGenerator.forBlock["train_setup"] = function (block) {
   const validation = block.getFieldValue("validation_split");
 
   let code = `batch_size, epoch, validation_ratio = ${batch}, ${epoch}, ${validation}\n`;
-  if (block.getFieldValue("use_target") == "TRUE") {
-    const target = block.getFieldValue("target_column");
-    code += `assert ("${target}" in data.columns), "Specified target column not found"\n`;
-    code += `target_label = ${target}\n`;
-    code += `y_train = data["${target}"]\n`;
-    code += `data = data.drop(columns=["${target}"])\n`;
-    code +=
-      "history = model.fit(data, y_train, epoch=epoch, batch_size=batch_size, validation_split=validation_ratio)\n";
-    return code;
-  }
-  code +=
-    "history = model.fit(data, epoch=epoch, batch_size=batch_size, validation_split=validation_ratio)\n";
+  code += `history = model.fit(data, data_y, epoch=epoch, batch_size=batch_size, validation_split=validation_ratio)\n`;
   return code;
 };
 
@@ -121,7 +118,6 @@ pythonGenerator.forBlock["accuracy_summary"] = function (block) {
   return `show_accuracy(history, ${show_final_acc}, ${show_acc_over_time})\n`;
 };
 
-// Modify this function when splitting and label column setup is done!
 pythonGenerator.forBlock["confusion_matrix"] = function (block) {
   const filePathBlock = block.getInputTargetBlock("LABELS");
   const labels = filePathBlock
@@ -129,8 +125,8 @@ pythonGenerator.forBlock["confusion_matrix"] = function (block) {
     : "['1', '2', '3']";
   let code = "";
   code += "y_true = data_test[target_label]\n";
-  code += "y_pred = model.predict(data_test)\n";
-  return `plot_confusion_matrix(y_true, y_pred, ${labels})\n`;
+  code += "y_pred = model.predict(test_data)\n";
+  return `plot_confusion_matrix(data_y, y_pred, ${labels})\n`;
 };
 
 // ============ CATEGORY THREE: NEURAL NETWORK MODEL ==========
