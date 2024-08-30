@@ -1,6 +1,6 @@
 {
   "type": "compile_model",
-  "message0": "Compile model with optimizer %1, loss function %2, and metrics %3",
+  "message0": "Compile model with optimizer %1,",
   "args0": [
     {
       "type": "field_dropdown",
@@ -10,7 +10,10 @@
         ["SGD", "sgd"],
         ["RMSprop", "rmsprop"]
       ]
-    },
+    }
+  ],
+  "message1": "loss function %1, and metrics %2",
+  "args1": [
     {
       "type": "field_dropdown",
       "name": "LOSS_FUNCTION",

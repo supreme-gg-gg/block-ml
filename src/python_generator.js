@@ -31,9 +31,7 @@ pythonGenerator.forBlock["input_main"] = function (block) {
 
 pythonGenerator.forBlock["use_label"] = function (block) {
   const target = block.getFieldValue("target_column");
-  return `assert ("${target}" in data.columns), "Specified target column not found"\n
-  target_label = ${target}\ndata_y = data[target_label]\n
-  data.drop([target_label, axis=1])`;
+  return `assert ("${target}" in data.columns), "Specified target column not found"\ntarget_label = ${target}\ndata_y = data[target_label]\ndata.drop([target_label, axis=1])\n`;
 };
 
 pythonGenerator.forBlock["data_group"] = function (block, generator) {
@@ -76,8 +74,7 @@ pythonGenerator.forBlock["split_data"] = function (block) {
   const shuffle = block.getFieldValue("SHUFFLE") == "TRUE" ? "True" : "False";
   const randomState = block.getFieldValue("RANDOM_STATE");
   // "data" will be used always for training even if there is no testing split required
-  return `
-  data, data_y, test_data test_y = train_test_split(data, data_y, test_size=${
+  return `data, data_y, test_data test_y = train_test_split(data, data_y, test_size=${
     1 - ratio
   }, shuffle=${shuffle}, random_state=${randomState})\n`;
 };
@@ -130,6 +127,15 @@ pythonGenerator.forBlock["confusion_matrix"] = function (block) {
 };
 
 // ============ CATEGORY THREE: NEURAL NETWORK MODEL ==========
+
+pythonGenerator.forBlock["input_layer"] = function (block) {
+  return `keras.Input(shape=shape)`;
+};
+
+pythonGenerator.forBlock["dropout_layer"] = function (block) {
+  const rate = block.getFieldValue("rate");
+  return `keras.layers.Dropout(${rate})`;
+};
 
 pythonGenerator.forBlock["dense_layer"] = function (block) {
   const neurons = block.getFieldValue("units");

@@ -63,11 +63,19 @@
       "contents": [
         {
           "kind": "block",
+          "type": "sequential_group"
+        },
+        {
+          "kind": "block",
           "type": "dense_layer"
         },
         {
           "kind": "block",
-          "type": "sequential_group"
+          "type": "input_layer"
+        },
+        {
+          "kind": "block",
+          "type": "dropout_layer"
         }
       ]
     },
