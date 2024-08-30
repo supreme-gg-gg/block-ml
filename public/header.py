@@ -1,7 +1,5 @@
-# Header.py contains all the imports and function definitions (helper / utils)
-
 import numpy as np, pandas as pd
-import tensorflow as tf, tf.keras
+from tensorflow import keras
 import matplotlib.pyplot as plt
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
 from sklearn.model_selection import train_test_split
@@ -49,7 +47,7 @@ def show_accuracy(history, final, overTime):
         print(f"Final Training Accuracy: {final_acc}")
     
     if (overTime):
-        plot_history(["accuracy"], history)
+        plot_history("accuracy", history)
 
 # You can only use this function after you used model.train
 # You must also have already indicated the label column in model.train (i.e. must be supervised learning)

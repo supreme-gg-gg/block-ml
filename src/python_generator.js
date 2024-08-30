@@ -21,22 +21,22 @@ pythonGenerator.forBlock["input_main"] = function (block) {
   const filePath = filePathBlock
     ? filePathBlock.getFieldValue("file_path")
     : "sample.csv";
-  const shape = block.getFieldValue("shape");
 
   // load_data() is implemented in header.py
   // create variables to be used later in the python script
+  // shape will be obtained without manual specificiation
   const type = block.getFieldValue("data_type");
-  return `data = load_data("${filePath}", "${type}")\nshape = ${shape}\n`;
+  return `data = load_data("${filePath}", "${type}")\n`;
 };
 
 pythonGenerator.forBlock["use_label"] = function (block) {
   const target = block.getFieldValue("target_column");
-  return `assert ("${target}" in data.columns), "Specified target column not found"\ntarget_label = ${target}\ndata_y = data[target_label]\ndata.drop([target_label, axis=1])\n`;
+  return `assert ("${target}" in data.columns), "Specified target column not found"\ntarget_label = "${target}"\ndata_y = data[target_label]\ndata = data.drop([target_label], axis=1)\n`;
 };
 
 pythonGenerator.forBlock["data_group"] = function (block, generator) {
   const innerCode = generator.statementToCode(block, "data_functions"); // type input_statements
-  return `def process_data(data):\n${innerCode}data = process_data(data)\n`;
+  return `\ndef process_data(data):\n${innerCode}  return data\n\ndata = process_data(data)\n`;
 };
 
 pythonGenerator.forBlock["normalize_data"] = function (block) {
@@ -74,7 +74,7 @@ pythonGenerator.forBlock["split_data"] = function (block) {
   const shuffle = block.getFieldValue("SHUFFLE") == "TRUE" ? "True" : "False";
   const randomState = block.getFieldValue("RANDOM_STATE");
   // "data" will be used always for training even if there is no testing split required
-  return `data, data_y, test_data test_y = train_test_split(data, data_y, test_size=${
+  return `data, test_data, data_y, test_y = train_test_split(data, data_y, test_size=${
     1 - ratio
   }, shuffle=${shuffle}, random_state=${randomState})\n`;
 };
@@ -83,11 +83,12 @@ pythonGenerator.forBlock["split_data"] = function (block) {
 
 pythonGenerator.forBlock["train_setup"] = function (block) {
   const batch = block.getFieldValue("batch_size");
-  const epoch = block.getFieldValue("epoch");
+  const epochs = block.getFieldValue("epoch");
   const validation = block.getFieldValue("validation_split");
 
-  let code = `batch_size, epoch, validation_ratio = ${batch}, ${epoch}, ${validation}\n`;
-  code += `history = model.fit(data, data_y, epoch=epoch, batch_size=batch_size, validation_split=validation_ratio)\n`;
+  let code = `batch_size, epochs, validation_ratio = ${batch}, ${epochs}, ${validation}\n`;
+  code += `History = model.fit(data, data_y, epochs=epochs, batch_size=batch_size, validation_split=validation_ratio)\n`;
+  code += `history = History.history\n`;
   return code;
 };
 
@@ -105,13 +106,14 @@ pythonGenerator.forBlock["evaluate_model"] = function (block) {
 
 pythonGenerator.forBlock["plot_history"] = function (block) {
   const metrics = block.getFieldValue("METRICS");
-  return `plot_history(${metrics}, history)\n`;
+  return `plot_history("${metrics}", history)\n`;
 };
 
 pythonGenerator.forBlock["accuracy_summary"] = function (block) {
-  const show_final_acc = block.getFieldValue("SHOW_FINAL_ACC") == "TRUE";
+  const show_final_acc =
+    block.getFieldValue("SHOW_FINAL_ACC") == "TRUE" ? "True" : "False";
   const show_acc_over_time =
-    block.getFieldValue("SHOW_ACC_OVER_TIME") == "TRUE";
+    block.getFieldValue("SHOW_ACC_OVER_TIME") == "TRUE" ? "True" : "False";
   return `show_accuracy(history, ${show_final_acc}, ${show_acc_over_time})\n`;
 };
 
@@ -129,12 +131,12 @@ pythonGenerator.forBlock["confusion_matrix"] = function (block) {
 // ============ CATEGORY THREE: NEURAL NETWORK MODEL ==========
 
 pythonGenerator.forBlock["input_layer"] = function (block) {
-  return `keras.Input(shape=shape)`;
+  return `keras.Input(shape=data.shape[1:]),\n`;
 };
 
 pythonGenerator.forBlock["dropout_layer"] = function (block) {
   const rate = block.getFieldValue("rate");
-  return `keras.layers.Dropout(${rate})`;
+  return `keras.layers.Dropout(${rate}),\n`;
 };
 
 pythonGenerator.forBlock["dense_layer"] = function (block) {
@@ -160,7 +162,7 @@ pythonGenerator.forBlock["predict"] = function (block) {
   }
   const filePath = filePathBlock.getFieldValue("file_path");
   const data_type = block.getFieldValue("data_type");
-  return `data_predict = load_data(${filePath}, ${data_type})\nmodel.predict(data_predict)\n`;
+  return `data_predict = load_data("${filePath}", "${data_type}")\nmodel.predict(data_predict)\n`;
 };
 
 pythonGenerator.forBlock["export_model"] = function (block) {
@@ -169,9 +171,10 @@ pythonGenerator.forBlock["export_model"] = function (block) {
   const filePath = filePathBlock
     ? filePathBlock.getFieldValue("file_path")
     : "trained_model.hdf5";
-  const includeOptimizer = block.getFieldValue("INCLUDE_OPTIMIZER") == "TRUE";
+  const includeOptimizer =
+    block.getFieldValue("INCLUDE_OPTIMIZER") == "TRUE" ? "True" : "False";
 
-  return `export_model(model, ${filePath}, ${format}, ${includeOptimizer})\n`;
+  return `export_model(model, "${filePath}", "${format}", ${includeOptimizer})\n`;
 };
 
 pythonGenerator.forBlock["serve_model"] = function () {
