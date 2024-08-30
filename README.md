@@ -1,6 +1,6 @@
 # MLock -- Block-based Machine Learning
 
-Struggling...
+Work in progress, 80%
 
 ## Repository structure
 
@@ -44,13 +44,12 @@ npx webpack
 ```
 
 - `npm install` downloads all the node_modules specified as dependencies in `package.json`
-- During development the files are put under src/ for webpack to generate dist/bundle.js.
-- Then we will move them to public/ with bundle.js so node.js can serve them properly
+- During development the files are put under src/ for webpack to generate bundle.js in the public directory served by node.js
+- You can make webpack recompile bundle.js automatically when a change is detected in the src/ folder using `npx webpack --watch`
+- Nodemon can automatically restart the node.js server when changes are made to server-side files like server.js: `npx nodemon server.js`
 
-## Easier workflow?
+## Script Execution
 
-- Make webpack recompile bundle.js automatically when a change is detected in the src/ folder
-  - `npx webpack --watch` will use Webpack's `webpack-dev-server`
-- Nodemon: automatically restart the node.js server when changes are made to server-side files like server.js
-  - Instead of `node server.js`, run `npx nodemon server.js`
-- Changes to the JSON blocks and static files in public/ are automatically updated by the server
+> The following method has been proved to work!
+
+For now, the only way to execute the generate script (recommended) is through [Google Colab](https://colab.research.google.com). Since it only accepts Jupyter Notebook, from the root directory run `python3 convert.py` to generate `generatedNotebook.ipynb` in build/. Then, upload this file to Colab together with other data file you specified in the input path.

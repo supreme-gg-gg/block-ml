@@ -1,0 +1,15 @@
+{
+    "type": "dropout_layer",
+    "message0": "Dropout layer with frequency of %1",
+    "args0": [
+        {
+            "type": "field_input",
+            "name": "rate",
+            "text": 0.2
+        }
+    ],
+    "colour": 120,
+    "tooltip": "Create a dropout layer for regularization",
+    "nextStatement": null,
+    "previousStatement": null
+}

@@ -1,0 +1,8 @@
+{
+    "type": "input_layer",
+    "message0": "Input layer with shape of dataset",
+    "colour": 120,
+    "tooltip": "Uses the shape specified in input block",
+    "nextStatement": null,
+    "previousStatement": null
+}
