@@ -120,6 +120,10 @@
           {
             "kind": "block",
             "type": "file_path_input"
+          },
+          {
+            "kind": "block",
+            "type": "colab_download"
           }
       ]
     }

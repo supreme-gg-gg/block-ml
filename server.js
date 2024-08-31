@@ -42,17 +42,42 @@ app.get("/python/:filename", (req, res) => {
 });
 */
 
+// Helper function to generate notebook JSON
+function createNotebook(code) {
+  return {
+    cells: [
+      {
+        cell_type: "code",
+        metadata: {},
+        source: code,
+        execution_count: null,
+        outputs: [],
+      },
+    ],
+    metadata: { colab: {} },
+    nbformat: 4,
+    nbformat_minor: 5,
+  };
+}
+
 // Endpoint to write to a file (output)
+// For simplicity we just write to ipynb directly so no conversion needed
 app.post("/write/:filename", (req, res) => {
   try {
     const filePath = path.join(__dirname, "build", req.params.filename);
     const { code } = req.body; // req.body.code
 
+    if (fs.existsSync(filePath)) {
+      fs.unlinkSync(filePath);
+    }
+
     if (!code) {
       return res.status(400).send("No code provided in the request.");
     }
 
-    fs.writeFile(filePath, code, "utf8", (err) => {
+    const notebook = createNotebook(code);
+
+    fs.writeFile(filePath, JSON.stringify(notebook, null, 2), "utf8", (err) => {
       if (err) {
         res.status(500).send("Error writing file");
         return;
@@ -62,6 +87,29 @@ app.post("/write/:filename", (req, res) => {
   } catch (error) {
     console.error("unhandled error:", error);
     res.status(500).send("Server Error");
+  }
+});
+
+app.get("/download/:filename", (req, res) => {
+  const filePath = path.join(__dirname, "build", req.params.filename);
+
+  if (fs.existsSync(filePath)) {
+    // Set the appropriate headers to trigger a download
+    res.setHeader("Content-Type", "application/json");
+    res.setHeader(
+      "Content-Disposition",
+      'attachment; filename="blockml.ipynb"'
+    );
+
+    res.download(filePath, "blockml.ipynb", (err) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log(`File at ${filePath} sent successfully`);
+      }
+    });
+  } else {
+    res.status(404).send("File not found");
   }
 });
 

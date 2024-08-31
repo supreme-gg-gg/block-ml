@@ -24,7 +24,7 @@ import { loadBlocks } from "./loadBlocks";
     let generatedCode = header + "\n" + code;
 
     try {
-      const response = await fetch("/write/generatedCode.py", {
+      const response = await fetch("/write/generatedNotebook.ipynb", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -95,12 +95,39 @@ import { loadBlocks } from "./loadBlocks";
     loadWorkspace(currentButton);
   }
 
+  async function handleDownload() {
+    try {
+      const response = await fetch("/download/generatedNotebook.ipynb");
+      // the response is the file that we want to download!
+
+      if (!response.ok) {
+        throw new Error(`Network response was not ok: ${response.statusText}`);
+      }
+
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "blockml.ipynb";
+      document.body.appendChild(a);
+      a.click(); // Programmatically click the link to trigger the download
+      a.remove();
+      window.URL.revokeObjectURL(url); // Clean up the blob URL
+
+      document.getElementById("text-area").value =
+        "Generated Jupyter Notebook successfully downloaded as blockml.ipynb";
+    } catch (error) {
+      console.log("Error downloading notebook", error);
+    }
+  }
+
   document.querySelector("#edit").addEventListener("click", enableEditMode);
   document.querySelector("#done").addEventListener("click", enableMakerMode);
   document.querySelector("#save").addEventListener("click", handleSave);
   document
     .querySelector("#generate")
     .addEventListener("click", handleGeneration);
+  document.querySelector("#download").addEventListener("click", handleDownload);
 
   enableMakerMode();
 

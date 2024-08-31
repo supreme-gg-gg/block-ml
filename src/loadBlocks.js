@@ -25,6 +25,7 @@ const blockFiles = [
   "use-label.json",
   "input_layer.json",
   "dropout.json",
+  "colab-download.json",
 ]; // List of all JSON files
 
 // this method loads block by making fetch request to the server
