@@ -1,9 +1,9 @@
 main {
-  width: 600px;
+  width: 800px;
   position: relative;
   margin: 0 auto;
   overflow: hidden;
-  height: 600px;
+  height: 675px;
 }
 
 header {
@@ -12,7 +12,7 @@ header {
 }
 
 h1 {
-  width: 600px;
+  width: 800px;
   position: relative;
   margin: 0 auto;
   color: #fff;
@@ -35,10 +35,10 @@ h1 {
 .blockly-editor {
   position: absolute;
   top: 64px;
-  left: -600px;
+  left: -800px;
   transition: left 0.4s;
-  height: 500px;
-  width: 600px;
+  height: 600px;
+  width: 800px;
   background-color: #eee;
 }
 
@@ -50,8 +50,8 @@ h1 {
   display: flex;
   flex-flow: column;
   justify-content: space-between;
-  height: 500px;
-  width: 600px;
+  height: 600px;
+  width: 800px;
 }
 
 .maker > div {
@@ -61,8 +61,8 @@ h1 {
 
 .button {
   color: #fff;
-  width: 300px;
-  height: 250px;
+  width: 400px;
+  height: 300px;
   font-size: 3em;
   display: flex;
   justify-content: center;
@@ -85,7 +85,7 @@ label {
 }
 
 textarea {
-  width: 600px; /* Match the width of the main container */
+  width: 800px; /* Match the width of the main container */
   height: 150px; /* Reasonable height for output */
   display: block;
   margin: 0 auto 20px auto; /* Centered with margin at the bottom */
