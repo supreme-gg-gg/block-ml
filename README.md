@@ -49,6 +49,10 @@ After opening the localhost address on your browser, select any of the Block ML 
 
 Once you are satisfied with your program, click the "GENERATE" button to generate a Jupyter Notebook. Use the "DOWNLOAD" button to download locally. After that, we recommend uploading `blockml.ipynb` to Google Colab together with other required data files for training and execution.
 
+## Contact Us
+
+You can connect with the project owner, Jet Chiang, either through [LinkedIn](https://www.linkedin.com/in/jet-chiang/) or [email](mailto:jetjiang.ez@gmail.com). Please reach out if you would like to contribute or report a bug. Your support is greatly appreciated and is essential to furthering our mission!
+
 ## Developer Resources
 
 We welcome contribution from everyone. However, you must be added as a collaborator of the repo to submit commits so please reach out to the project lead / owner first.
