@@ -31,7 +31,10 @@ pythonGenerator.forBlock["input_main"] = function (block) {
 
 pythonGenerator.forBlock["use_label"] = function (block) {
   const target = block.getFieldValue("target_column");
-  return `assert ("${target}" in data.columns), "Specified target column not found"\ntarget_label = "${target}"\ndata_y = data[target_label]\ndata = data.drop([target_label], axis=1)\n`;
+  const categorical =
+    block.getFieldValue("one_hot") == "TRUE" ? "True" : "False";
+  const numClasses = block.getFieldValue("num_classes");
+  return `target_label="${target}"\nnum_classes=${numClasses}\ndata, data_y = process_label(data, target_label, ${categorical}, num_classes)\n`;
 };
 
 pythonGenerator.forBlock["data_group"] = function (block, generator) {
@@ -162,7 +165,11 @@ pythonGenerator.forBlock["predict"] = function (block) {
   }
   const filePath = filePathBlock.getFieldValue("file_path");
   const data_type = block.getFieldValue("data_type");
-  return `data_predict = load_data("${filePath}", "${data_type}")\nmodel.predict(data_predict)\n`;
+  let code = `y_pred = make_prediction("${filePath}", "${data_type}")\n`;
+  if (block.getFieldValue("use_raw") != "TRUE") {
+    code += `y_pred = convert_classes(y_pred)\n`;
+  }
+  return code;
 };
 
 pythonGenerator.forBlock["export_model"] = function (block) {
@@ -177,8 +184,17 @@ pythonGenerator.forBlock["export_model"] = function (block) {
   return `export_model(model, "${filePath}", "${format}", ${includeOptimizer})\n`;
 };
 
+pythonGenerator.forBlock["colab_download"] = function (block) {
+  const filePathBlock = block.getInputTargetBlock("file_path");
+  const filePath = filePathBlock
+    ? filePathBlock.getFieldValue("file_path")
+    : "predictions.csv";
+  const type = block.getFieldValue("data_type");
+  return `data = colab_download("${filePath}", "${type}", y_pred)\n`;
+};
+
 pythonGenerator.forBlock["serve_model"] = function () {
-  return `print("Model has been served... (will be developed)")`;
+  return `print("Model has been served... (will be developed)")\n`;
 };
 
 export { pythonGenerator };

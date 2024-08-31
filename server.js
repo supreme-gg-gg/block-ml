@@ -49,12 +49,12 @@ function createNotebook(code) {
       {
         cell_type: "code",
         metadata: {},
-        source: code.split("\n"),
+        source: code,
         execution_count: null,
         outputs: [],
       },
     ],
-    metadata: {},
+    metadata: { colab: {} },
     nbformat: 4,
     nbformat_minor: 5,
   };

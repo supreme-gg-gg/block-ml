@@ -1,15 +1,28 @@
 {
     "type": "use_label",
-    "message0": "Use column %1 as target",
+    "message0": "Use column %1 as target,",
     "args0": [
         {
             "type": "field_input",
             "name": "target_column",
-            "text": "column"
+            "text": "label"
+        }
+    ],
+    "message1": "number of classes %2, one-hot encoding %1",
+    "args1": [
+        {
+            "type": "field_checkbox",
+            "name": "one_hot",
+            "checked": false
+        },
+        {
+            "type": "field_input",
+            "name": "num_classes",
+            "text": "2"
         }
     ],
     "colour": 285,
-    "tooltip": "Specify which column to use as target",
+    "tooltip": "Information specified here must match the output layer",
     "nextStatement": null,
     "previousStatement": "input_main"
 }

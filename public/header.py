@@ -4,6 +4,9 @@ import matplotlib.pyplot as plt
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import confusion_matrix
+from tensorflow.keras.utils import to_categorical
+# Comment this out if not working in Colab!
+from google.colab import files
 
 def load_data(source, type):
     if type == "csv":
@@ -14,6 +17,16 @@ def load_data(source, type):
         # We can ignore this case for now we only use pandas for loading
         # NumPy binary file (file.npy)
         return np.load(source)
+    
+def process_label(data, target, categorical, classes):
+
+    assert (target in data.columns), "Specified target column not found"
+    data_y = data[target]
+    data = data.drop([target], axis=1)
+    if categorical:
+        data_y = to_categorical(data_y, num_classes=classes)
+
+    return data, data_y
     
 def export_model(model, source, type, optimizer):
     if type == "hdf5":
@@ -83,3 +96,28 @@ def evaluate_model(test_data):
     score = model.evaluate(test_data)
     print("Test loss:", score[0])
     print("Test accuracy:", score[1])
+
+# Prediction generated is in format NumPy ndarrays
+# Not recommended, should download from Colab directly instead!
+def colab_download(path, type, source):
+    if type == "csv":
+        df = pd.DataFrame(source, columns=["Prediction"])
+        df.to_csv(path, index=False)
+    files.download(path)
+
+def make_prediction(source, type):
+    data_predict = load_data(source, type)
+    y_pred = model.predict(data_predict)
+    print("The first 10 predictions are: ", y_pred[:10])
+    return y_pred
+
+def convert_classes(predictions):
+    
+    '''
+    Class labels are numerical by default and start with 0
+    Example: [[0.1, 0.8, 0.1], [0.6, 0.3, 0.1], ...] -> [1, 0, ...]
+    '''
+
+    class_labels = np.argmax(predictions, axis=1)
+    print(class_labels[:10])
+    return class_labels

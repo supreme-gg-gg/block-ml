@@ -1,6 +1,6 @@
 {
-    "type": "predict",
-    "message0": "Predict on %1 of type %2, output raw %3",
+    "type": "colab_download",
+    "message0": "Download the prediction as a %2 at %1",
     "args0": [
         {
             "type": "input_value",
@@ -14,15 +14,11 @@
                 ["Excel", "xlsx"],
                 ["NumPy Array", "np"]
             ]
-        }, 
-        {
-            "type": "field_checkbox",
-            "name": "use_raw",
-            "checked": false
         }
     ],
     "nextStatement": null,
     "previousStatement": null,
     "colour": 0,
-    "tooltip": "Make prediction on a dataset with provided source"
+    "tooltip": "Only works for Google Colab",
+    "inputsInline": true
 }
