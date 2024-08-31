@@ -2,7 +2,7 @@ import nbformat as nbf
 
 # Make new notebook, read & add code to cell, write notebook to new file
 
-def convert_ipynb(input_file="build/generatedCode.py", output_file="build/generatedNotebook.ipynb"):
+def convert_ipynb(input_file="generatedCode.py", output_file="generatedNotebook.ipynb"):
     
     nb = nbf.v4.new_notebook()
 
