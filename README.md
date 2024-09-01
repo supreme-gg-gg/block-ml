@@ -92,3 +92,12 @@ block-ml/
 - During development the files are put under src/ for webpack to generate bundle.js in the public directory served by node.js
 - You can make webpack recompile bundle.js automatically when a change is detected in the src/ folder using `npx webpack --watch`
 - Nodemon can automatically restart the node.js server when changes are made to server-side files like server.js: `npx nodemon server.js`
+
+## Areas of Future Improvements
+
+Only the core components of the project have been finished due to time constraints. The following features have been suggested to further improve the application. However, additional updates are unlikely but please reach out if you want to contribute.
+
+1. **Deployment with API calls**: deploy the trained model with Tensorflow Serve (etc.) in our real server and allow users to send requests to use the model
+2. **Automated cloud script execution**: after generating the script instead of downloading and manually upload to Colab run it automatically in cloud computing platforms
+3. **Improved visualisation**: show the training process live and the architecture of the network as an overview for educational purposes
+4. **More modularised process**: instead of the blocks being designed to work like a waterfall chain, have "sections" that design different parts of the program (e.g. input processing, model definition, deployment)
